@@ -78,6 +78,7 @@ function App() {
 
   const addData = (count: number) => {
     setData(data.concat(createRecord(count)));
+    // Reset heights
     cache.clearAll();
 
     if (listRef.current) {
