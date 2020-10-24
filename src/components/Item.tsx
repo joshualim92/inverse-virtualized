@@ -21,6 +21,8 @@ export interface ItemProps {
   provided: DraggableProvided;
   // style are inline styles from react-virtualized
   style?: Object;
+  // onDelete callback with index
+  onDelete?: (index: string) => void;
 }
 
 const Container = styled.div`
@@ -62,7 +64,13 @@ const getStyle = ({
   return withSpacing;
 };
 
-const Item: FC<ItemProps> = ({ isDragging, item, provided, style }) => {
+const Item: FC<ItemProps> = ({
+  isDragging,
+  item,
+  provided,
+  style,
+  onDelete,
+}) => {
   return (
     <Container
       ref={provided.innerRef}
@@ -71,7 +79,14 @@ const Item: FC<ItemProps> = ({ isDragging, item, provided, style }) => {
       style={getStyle({ provided, style, isDragging })}
     >
       {item.content}
-      <DeleteButton type="button">X</DeleteButton>
+      <DeleteButton
+        type="button"
+        onClick={() => {
+          if (onDelete) onDelete(item.id);
+        }}
+      >
+        X
+      </DeleteButton>
     </Container>
   );
 };
